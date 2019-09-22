@@ -1,20 +1,16 @@
-{% extends "title_base.html"  %}<!-- extends引用统一的模板文件 -->
+{% extends "title_base.html"  %}
+
+{% block title  %}
 {% load staticfiles %}
+<link type="image/x-icon" rel="shortcut icon" href="{% static 'favicon.ico' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/common.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
 
-{% block header_extends %}<!-- 第一个块 -->
-    <link type="image/x-icon" rel="shortcut icon" href="{% static 'favicon.ico' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/common.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
-    <!-- <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}"> -->
-{% endblock %}
 
-{% block content  %}<!-- 第二个块，在block里面填充页面内容 -->
 <body class="index">
-    <!-- 最顶部的导航栏 -->
 	<div class="header">
-		<a href="/" class="logo" title="首页"><img alt="我的音乐" src="../static/image/logo.png"></a>
+		<a href="/" class="logo" title="首页"><img alt="我的音乐" src="{% static 'image/logo.png' %}"></a>
 		<div class="search-box">
-            <!-- html的表单 -->
             <form id="searchForm" action="{% url 'search' 1 %}" method="post" target="_blank">
             {% csrf_token %}
                 <div class="search-keyword">
@@ -22,41 +18,36 @@
                 </div>
                 <input id="subSerch" type="submit" class="search-button" value="搜 索" />
             </form>
-            <div id="suggest" class="search-suggest"></div>
-            <!-- 在搜索框下面显示热门歌曲 -->
-            <div class="search-hot-words">
-                {% for song in search_song  %}
-                    <a target="play" href="{% url 'play' song.song.song_id %}" >{{ song.song.song_name }}</a>
-                {% endfor  %}
-            </div>
-  	    </div>
+	    <div id="suggest" class="search-suggest"></div>
+  		<div class="search-hot-words">
+			{% for song in search_song  %}
+				<a target="play" href="{% url 'play' song.song.song_id %}" >{{ song.song.song_name }}</a>
+			{% endfor  %}
+  		</div>
+  	</div>
 	</div>
-    <!-- 搜索框下面的导航栏 -->
 	<div class="nav-box">
-        <div class="nav-box-inner">
-            <ul class="nav clearfix">
-                <li><a href="/">首页</a></li>
-                <li><a href="{% url 'ranking' %}" target="_blank">歌曲排行</a></li>
-                <li><a href="{% url 'home' 1 %}" target="_blank">用户中心</a></li>
-            </ul>
-        </div>
-    </div><!--end nav-box-->
-    <!-- 最左侧的音乐分类导航栏 -->
-    <div class="category-nav">
-        <div class="category-nav-header">
-            <strong><a href="javascript:;" title="">音乐分类</a></strong>
-        </div>
-        <div class="category-nav-body">
-            <div id="J_CategoryItems" class="category-items">
-                {% for label in label_list  %}
-                    <div class="item" data-index="1"><h3>
-                        <a href="javascript:;">{{ label.label_name }}</a></h3>
-                    </div>
-                {% endfor  %}
+    <div class="nav-box-inner">
+        <ul class="nav clearfix">
+            <li><a href="/">首页</a></li>
+            <li><a href="{% url 'ranking' %}" target="_blank">歌曲排行</a></li>
+            <li><a href="{% url 'home' 1 %}" target="_blank">用户中心</a></li>
+        </ul>
+        <div class="category-nav">
+            <div class="category-nav-header">
+                <strong><a href="javascript:;" title="">音乐分类</a></strong>
+            </div>
+            <div class="category-nav-body">
+                <div id="J_CategoryItems" class="category-items">
+                    {% for label in label_list  %}
+                        <div class="item" data-index="1"><h3>
+                            <a href="javascript:;">{{ label.label_name }}</a></h3>
+                        </div>
+                    {% endfor  %}
+                </div>
             </div>
         </div>
     </div>
-    <!-- 中间的大图片和右侧栏热门歌曲模块 -->
 	<div class="wrapper clearfix">
 		<div class="main">
 			<div id="J_FocusSlider" class="focus">
@@ -83,7 +74,6 @@
 			</ul>
 		</div>
 	</div>
-    <!-- 新歌推荐模块 -->
 	<div class="today clearfix">
 		<div class="today-header">
             <i></i>
@@ -92,26 +82,25 @@
 		<div class="today-list-box slide">
 			<div id="J_TodayRec" class="today-list">
 				<ul>
-                    {% for list in daily_recommendation  %}
-                        {% if forloop.first  %}
-                            <li class="first">
-                        {% else  %}
-                            <li>
-                        {% endif  %}
-                        <a class="pic layz_load pic_po" target="play" href="{% url 'play' list.song_id %}" >
-                            <img data-src="../static/songImg/{{ list.song_img }}"  ></a>
-                        <div class="name">
-                            <h3><a target="play" href="{% url 'play' list.song_id %}" >{{ list.song_name }}</a></h3>
-                            <div class="singer"><span>{{ list.song_singer }}</span></div>
-                            <div class="times">发行时间：<span>{{ list.song_release }}</span></div>
-                        </div>
-                        <a target="play" href="{% url 'play' list.song_id %}" class="today-buy-button" >去听听></a>
-                    {% endfor  %}
+                {% for list in daily_recommendation  %}
+                    {% if forloop.first  %}
+                        <li class="first">
+                    {% else  %}
+                        <li>
+                    {% endif  %}
+                    <a class="pic layz_load pic_po" target="play" href="{% url 'play' list.song_id %}" >
+                        <img data-src="{% static 'songImg/' %}{{ list.song_img }}"  ></a>
+                    <div class="name">
+                        <h3><a target="play" href="{% url 'play' list.song_id %}" >{{ list.song_name }}</a></h3>
+                        <div class="singer"><span>{{ list.song_singer }}</span></div>
+                        <div class="times">发行时间：<span>{{ list.song_release }}</span></div>
+                    </div>
+                    <a target="play" href="{% url 'play' list.song_id %}" class="today-buy-button" >去听听></a>
+                {% endfor  %}
 				</ul>
 			</div>
 		</div>
 	</div><!--end today-->
-    <!-- 最底部的热门搜索、热门下载的功能模块 -->
 	<div class="section">
 		<ul id="J_Tab" class="tab-trigger">
             <li data-cur="0" class="current t_c">热门搜索</li>
@@ -125,10 +114,11 @@
                     {% else  %}
                         <ul class="product-list clearfix t_s" style="display:none;">
                     {% endif  %}
-                    {% for songs in list  %}
+                        <ul>
+                        {% for songs in list  %}
                         <li>
                             <a target="play" href="{% url 'play' songs.song.song_id %}" class="pic layz_load pic_po" >
-                                <img data-src="../static/songImg/{{ songs.song.song_img }}" ></a>
+                                <img data-src="{% static 'songImg/' %}{{ songs.song.song_img }}" ></a>
                             <h3><a target="play" href="{% url 'play' songs.song.song_id %}" >{{ songs.song.song_name }}</a></h3>
                             <div class="singer"><span>{{ songs.song.song_singer }}</span></div>
                             {% if all_ranking|first  == list %}
@@ -136,12 +126,13 @@
                             {% else %}
                             <div class="times">下载次数：<span>{{ songs.dynamic_down }}</span></div>
                             {% endif %}
-                     {% endfor %}
+                        </li>
+                        {% endfor %}
+                        </ul>
                 {% endfor %}
             </div>
         </div>
     </div><!--end section-->
 	</div>
-	<script data-main="{% static 'js/index.js' %}"></script>
-    <script src="../static/js/require.js"></script>
+	<script data-main="{% static 'js/index.js' %}" src="{% static 'js/require.js' %}"></script>
 {% endblock  %}
