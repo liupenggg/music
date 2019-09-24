@@ -49,8 +49,8 @@
         <div class="category-nav-body">
             <div id="J_CategoryItems" class="category-items">
                 {% for label in label_list  %}
-                    <div class="item" data-index="1"><h3>
-                        <a href="javascript:;">{{ label.label_name }}</a></h3>
+                    <div class="item" data-index="1">
+                        <h3><a href="javascript:;">{{ label.label_name }}</a></h3>
                     </div>
                 {% endfor  %}
             </div>
@@ -125,7 +125,7 @@
                     {% else  %}
                         <ul class="product-list clearfix t_s" style="display:none;">
                     {% endif  %}
-                        <ul>
+
                         {% for songs in list  %}
                             <li>
                                 <a target="play" href="{% url 'play' songs.song.song_id %}" class="pic layz_load pic_po" >
