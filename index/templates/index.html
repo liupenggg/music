@@ -41,23 +41,22 @@
             </ul>
         </div>
     </div><!--end nav-box-->
-    <!-- 最左侧的音乐分类导航栏 -->
-    <div class="category-nav">
-        <div class="category-nav-header">
-            <strong><a href="javascript:;" title="">音乐分类</a></strong>
-        </div>
-        <div class="category-nav-body">
-            <div id="J_CategoryItems" class="category-items">
-                {% for label in label_list  %}
-                    <div class="item" data-index="1">
-                        <h3><a href="javascript:;">{{ label.label_name }}</a></h3>
-                    </div>
-                {% endfor  %}
+    <!-- 最左侧的音乐分类导航栏，中间的大图片，右侧栏热门歌曲模块 -->
+	<div class="wrapper clearfix">
+        <div class="category-nav">
+            <div class="category-nav-header">
+                <strong><a href="javascript:;" title="">音乐分类</a></strong>
+            </div>
+            <div class="category-nav-body">
+                <div id="J_CategoryItems" class="category-items">
+                    {% for label in label_list  %}
+                        <div class="item" data-index="1">
+                            <h3><a href="javascript:;">{{ label.label_name }}</a></h3>
+                        </div>
+                    {% endfor  %}
+                </div>
             </div>
         </div>
-    </div>
-    <!-- 中间的大图片和右侧栏热门歌曲模块 -->
-	<div class="wrapper clearfix">
 		<div class="main">
 			<div id="J_FocusSlider" class="focus">
 				<div id="bannerLeftBtn" class="banner_btn"></div>
@@ -125,26 +124,24 @@
                     {% else  %}
                         <ul class="product-list clearfix t_s" style="display:none;">
                     {% endif  %}
-
-                        {% for songs in list  %}
-                            <li>
-                                <a target="play" href="{% url 'play' songs.song.song_id %}" class="pic layz_load pic_po" >
-                                    <img data-src="../static/songImg/{{ songs.song.song_img }}" ></a>
-                                <h3><a target="play" href="{% url 'play' songs.song.song_id %}" >{{ songs.song.song_name }}</a></h3>
-                                <div class="singer"><span>{{ songs.song.song_singer }}</span></div>
-                                {% if all_ranking|first  == list %}
-                                <div class="times">搜索次数：<span>{{ songs.dynamic_search }}</span></div>
-                                {% else %}
-                                <div class="times">下载次数：<span>{{ songs.dynamic_down }}</span></div>
-                                {% endif %}
-                            </li>
-                         {% endfor %}
+                    {% for songs in list  %}
+                        <li>
+                            <a target="play" href="{% url 'play' songs.song.song_id %}" class="pic layz_load pic_po" >
+                                <img data-src="../static/songImg/{{ songs.song.song_img }}" ></a>
+                            <h3><a target="play" href="{% url 'play' songs.song.song_id %}" >{{ songs.song.song_name }}</a></h3>
+                            <div class="singer"><span>{{ songs.song.song_singer }}</span></div>
+                            {% if all_ranking|first  == list %}
+                            <div class="times">搜索次数：<span>{{ songs.dynamic_search }}</span></div>
+                            {% else %}
+                            <div class="times">下载次数：<span>{{ songs.dynamic_down }}</span></div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
                         </ul>
                 {% endfor %}
             </div>
         </div>
     </div><!--end section-->
-	</div>
 	<script data-main="{% static 'js/index.js' %}"></script>
     <script src="../static/js/require.js"></script>
 {% endblock  %}
