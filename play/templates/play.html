@@ -41,8 +41,14 @@
             <div class="product-detail-box clearfix">
                 <div class="product-pics">
                     <div class="music_box">
-                        <div id="jquery_jplayer_1" class="jp-jplayer" data-url="{% static 'songFile/' %}{{ song_info.song_file }}></div>
-                        <div class="jp_img layz_load pic_po" title="点击播放"><img data-src="{% static 'songImg/' %}{{ song_info.song_img }}></div>
+                        <!-- 歌曲播放，播放功能由JavaScript实现，Django只需提供歌曲文件即可实现在线试听-->
+                        <div id="jquery_jplayer_1" class="jp-jplayer"
+                             data-url="{% static 'songFile/' %}{{ song_info.song_file }}">
+                        </div>
+                        <!-- 歌曲封面 -->
+                        <div class="jp_img layz_load pic_po" title="点击播放">
+                            <img data-src="{% static 'songImg/' %}{{ song_info.song_img }}">
+                        </div>
                         <div id="jp_container_1" class="jp-audio">
                             <div class="jp-gui jp-interface">
                                 <div class="jp-time-holder clearfix">
@@ -79,11 +85,13 @@
                             <ul id="lrc_list" class="lrc_list"></ul>
                         </div>
                     </div><!--end music_box-->
+                    <!-- 歌词-->
                     <textarea id="lrc_content" style="display: none;">
                       {{ song_lyrics }}
                     </textarea>
                 </div><!--end product-pics-->
                 <div class="product-detail-main">
+                    <!-- 歌曲信息 -->
                     <div class="product-price">
                         <h1 id="currentSong" >{{ song_info.song_name }}</h1>
                         <div class="product-price-info">
@@ -104,19 +112,21 @@
                             <a class="minimum-link-A" href="{% url 'comment' song_info.song_id %}" >歌曲点评</a>
                         </div><!-- end links-->
                         <h3 class="list_title">当前播放列表</h3>
+                        <!--播放列表-->
                         <ul class="playing-li" id="songlist">
-                            <!--播放列表-->
-                            {% for list in play_list %}
+                        {% for list in play_list %}
+                            <!--设置当前歌曲的样式-->
                             {%if list.song_id == song_info.song_id %}
-                            <li data-id="{{list.song_id}}" class="current">
+                                <li data-id="{{list.song_id}}" class="current">
                             {%else %}
-                            <li data-id="{{list.song_id}}">
+                                <li data-id="{{list.song_id}}">
                             {%endif %}
+                            <!--设置歌曲列表序号、歌名和歌手-->
                             <span class="num">{{forloop.counter}}</span>
                             <a class="name" href="{% url 'play' list.song_id %}" target="play" >{{list.song_name}}</a>
                             <a class="singer" href="javascript:;" target="_blank" >{{list.song_singer}}</a>
-                            </li>
-                            {%endfor %}
+                        </li>
+                        {%endfor %}
                         </ul>
                         <div class="nplayL-btns" id="playleixin">
                         <ul>
@@ -152,7 +162,7 @@
                                     <li>
                                         {% if item.song.song_id != song_info.song_id %}
                                         <a class="pic layz_load pic_po" href="{% url 'play' item.song.song_id %}" target="play" >
-                                            <img data-src="{% static "songImg/" %}{{ item.song.song_img }}">
+                                            <img data-src="../static/songImg/{{ item.song.song_img }}">
                                         </a>
                                         <h4><a href="{% url 'play' item.song.song_id %}" target="play" >{{ item.song.song_name}}</a></h4>
                                         <a href="javascript:;" class="J_MoreParts accessories-more">{{ item.song.song_singer }}</a>
@@ -169,5 +179,5 @@
         </div>
     </div>
 
-	<script data-main="{% static "js/play.js" %}" src="{% static "js/require.js" %}"></script>
+	<script data-main="{% static 'js/play.js' %}" src="{% static 'js/require.js' %}"></script>
 {% endblock  %}
