@@ -15,5 +15,7 @@ Then:
      python manage.py migrate
      python manage.py runserver
 
-Finaly, open the brower, using address: `127.0.0.1:8000`
+Finaly
+
+    open the brower, using address: `127.0.0.1:8000`
 
