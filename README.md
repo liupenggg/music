@@ -2,13 +2,12 @@
 
 使用Django2.2.5+Mysql实现了一个简单的音乐网站
 
-相关搭建过程见博客：https://blog.csdn.net/weixin_42247922/article/details/102936575
 
 ### Usage
 First:
 
     pip install  requirements.txt
-    然后按照此博客：https://blog.csdn.net/weixin_42247922/article/details/102936575进行项目的搭建
+    
     最后将上面目录的data文件夹中的数据导入数据库
 Then:
 
