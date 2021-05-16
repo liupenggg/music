@@ -8,7 +8,7 @@ First:
 
     pip install  requirements.txt
     
-    最后将上面目录的data文件夹中的数据导入数据库
+    最后将上面目录的```data文件夹```中的数据导入数据库
 Then:
 
      cd music
